@@ -1,0 +1,100 @@
+@import 'https://fonts.googleapis.com/css?family=Share+Tech+Mono';
+.toast:not(.showing):not(.show) {
+    opacity: 1;
+}
+
+.toast_success {
+    display: none;
+}
+
+.toast {
+    display: none;
+}
+
+#header {
+    text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+#calc {
+    text-align: center;
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: #abc6c2;
+    padding: 8px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #224662;
+}
+
+#display {
+    background: #bcbcbc;
+    padding: 8px;
+    margin: 16px 12px 10px 16px;
+    text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+    border-radius: 8px;
+}
+
+#result p {
+    font-size: 1.8em;
+}
+
+#result,
+#previous {
+    text-align: right;
+}
+
+#keyboard {
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.row {
+    margin-top: 4px;
+}
+
+.last-row {
+    float: left;
+    margin-top: -11.5%;
+}
+
+.invisible {
+    width: 0;
+}
+
+.btn-zero {
+    width: 134px;
+}
+
+.btn-result {
+    float: right;
+    margin-left: 4px;
+    height: 74px;
+}
+
+.btn-p {
+    width: 62px !important;
+    margin: 2px;
+}
+
+.mobile_nav {
+    display: flex;
+}
+
+.button_nav {
+    display: none;
+}
+
+@media all and (max-width: 1400px) {
+    .mobile_nav {
+        display: none !important;
+    }
+    .button_nav {
+        display: flex !important;
+    }
+}

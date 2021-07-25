@@ -1,0 +1,7 @@
+User-Agent: *
+Disallow: /assets/css/
+Disallow: /assets/js/
+Disallow: /config/
+Disallow: /mail/
+Disallow: /modules/
+Disallow: /pages/

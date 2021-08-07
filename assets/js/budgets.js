@@ -337,3 +337,50 @@ $(function() {
         }
     })
 })
+
+$(document).on('click', '.mask_line', function() {
+
+    var id = $(this).attr('data-id'),
+        tr = $(`.mask_tr_${id}`);
+
+    $.ajax({
+        url: '../ajax/ajax-BudgetsMask.php',
+        method: 'POST',
+        data: {
+            id: id,
+            active: 0
+        },
+        success: function(data) {
+
+            if (data == "ok") {
+
+                tr.fadeOut();
+
+            }
+        }
+    });
+
+    return false;
+
+});
+
+$('.view_line').click(function() {
+
+    $.ajax({
+        url: '../ajax/ajax-BudgetsView.php',
+        method: 'POST',
+        data: {
+            month: $('input[name=month]').val(),
+            active: 1
+        },
+        success: function(data) {
+
+            if (data == "ok") {
+
+                tr.fadeOut();
+
+            }
+        }
+    });
+
+});

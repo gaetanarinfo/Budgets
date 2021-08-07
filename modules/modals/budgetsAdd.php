@@ -22,11 +22,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Somme :</label>
-                        <input type="number" class="form-control" name="sommes" id="sommes" required>
+                        <input type="text" class="form-control" name="sommes" id="sommes" placeholder="200.20" required>
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Montant due :</label>
-                        <input type="number" class="form-control" name="montant_due" id="montant_due" required>
+                        <input type="text" class="form-control" name="montant_due" id="montant_due" placeholder="200.20" required>
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Facture payer :</label>

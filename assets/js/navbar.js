@@ -1,4 +1,4 @@
-$('#logout').click(function() {
+$('.logout').click(function() {
 
     if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
 

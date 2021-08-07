@@ -23,6 +23,11 @@
       <label for="password">Mot de passe</label>
     </div>
 
+    <div class="form-floating mb-2">
+      <input type="email" minlength="4" class="form-control" id="email" placeholder="Adresse email" required>
+      <label for="email">Adresse email</label>
+    </div>
+
     <div class="form-check form-switch mb-2" style="padding: 0 0 0 47px;">
       <input class="form-check-input" type="checkbox" id="cgu" required>
       <label class="form-check-label" for="cgu">Conditions Général D'utilisation</label>
@@ -30,7 +35,7 @@
 
     <button class="w-100 btn btn-lg btn-primary" type="submit">S'inscrire</button>
 
-    <p class="mt-5 mb-3 text-muted">Seigneur Gaëtan - Budjets © 2021-2022</p>
+    <p class="mt-5 mb-3 text-muted"> © Copyright - Seigneur Gaëtan - Budgets - <?= date('Y') ?></p>
 
   </form>
 </main>

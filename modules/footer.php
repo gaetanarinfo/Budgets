@@ -1,14 +1,19 @@
 <?php include 'modals/calculatrice.php'; ?>
 <?php include 'modals/faqs.php'; ?>
 <?php include 'modals/finance.php'; ?>
+<?php include 'modals/logs.php'; ?>
+
+<?php if (!empty($_SESSION['user_id'])) {
+    include 'modals/editProfile.php';
+} ?>
 
 <footer class="footer mt-auto py-3 bg-dark" style="position: static;bottom: 0;width: 100%;">
     <div class="container text-center">
-        <span class="text-white">Copyright Gaëtan Seigneur - 2021 - 2022</span>
+        <span class="text-white"> © Copyright - Seigneur Gaëtan - Budgets - <?= date('Y') ?></span>
     </div>
 </footer>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="<?= $static_url ?>bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= $static_url ?>bootstrap/js/popper.min.js" crossorigin="anonymous"></script>
 
 <!-- Slider -->
@@ -34,6 +39,10 @@ if (!empty($_GET['budgets'])) {
 <?php }
 } ?>
 
+<?php if ($_SERVER['REQUEST_URI'] == "/forgot") { ?>
+    <script src="<?= $static_url ?>js/forgot.js?<?= time() ?>" crossorigin="anonymous"></script>
+<?php } ?>
+
 <!-- Annee -->
 <?php
 
@@ -54,6 +63,12 @@ if (!empty($_GET['annee'])) {
 <?php } ?>
 
 <script src="<?= $static_url ?>js/navbar.js?<?= time() ?>" crossorigin="anonymous"></script>
+
+<?php if (!empty($_SESSION['user_id'])) { ?><script src="<?= $static_url ?>js/editProfile.js?<?= time() ?>" crossorigin="anonymous"></script><?php } ?>
+
+<?php if (!empty($_SESSION['token']) && $_SERVER['REQUEST_URI'] == "/forgot-confirm/" . $_SESSION['token']) { ?>
+    <script src="<?= $static_url ?>js/forgotConfirm.js?<?= time() ?>" crossorigin="anonymous"></script>
+<?php } ?>
 
 </body>
 

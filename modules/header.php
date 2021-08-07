@@ -9,6 +9,9 @@
     <meta name="description" content="Budgets est l'application qui vous aide à prendre de meilleures décisions pour votre argent. Gérez simplement vos dépenses, votre budget, votre épargne, et vos crédits. Avec notre application, vous ferez des économies et mettrez plus facilement de côté." />
     <meta name="author" content="Gaëtan Seigneur">
 
+    <!-- Icon -->
+    <script src="<?= $static_url ?>js/9d1d83a1dd.js" crossorigin="anonymous"></script>
+
     <!-- Style -->
     <link href="<?= $static_url ?>bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
 
@@ -47,6 +50,16 @@
     <?php }
     } ?>
 
+    <!-- Forgot -->
+    <?php if ($_SERVER['REQUEST_URI'] == "/forgot") { ?>
+        <link href="<?= $static_url ?>css/forgot.css?<?= time() ?>" rel="stylesheet" type="text/css" />
+    <?php } ?>
+
+    <!-- Forgot Confirmation -->
+    <?php if (!empty($_SESSION['token']) && $_SERVER['REQUEST_URI'] == "/forgot-confirm/" . $_SESSION['token']) { ?>
+        <link href="<?= $static_url ?>css/forgotConfirm.css?<?= time() ?>" rel="stylesheet" type="text/css" />
+    <?php } ?>
+
     <!-- Annee -->
     <?php if (!empty($_GET['annee'])) {
 
@@ -57,9 +70,6 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-
-    <!-- Icon -->
-    <script src="https://kit.fontawesome.com/9d1d83a1dd.js" crossorigin="anonymous"></script>
 
     <meta name="theme-color" content="#f5f5f5">
 
@@ -74,21 +84,14 @@
     <script src="<?= $static_url ?>bootstrap/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="<?= $static_url ?>js/jquery.min.js" crossorigin="anonymous"></script>
 
-    <script href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.js" crossorigin="anonymous"></script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9R54C1MBSD"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'G-9R54C1MBSD');
-    </script>
+    <script href="<?= $static_url ?>js/jquery.tablesorter.js" crossorigin="anonymous"></script>
 
 </head>
 
 <body class="d-flex flex-column h-100">
+
+<?php if(!empty($_SESSION['user_id'])) {
+    $users = selectDB('*', 'users', 'id = "' . $_SESSION['user_id'] . '"', $db, '1');
+}
+
+?>

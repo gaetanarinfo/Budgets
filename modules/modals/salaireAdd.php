@@ -19,14 +19,14 @@
 
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Montant (Net) :</label>
-                        <input type="number" class="form-control" name="montant" id="montant" required>
+                        <input type="text" class="form-control" name="montant" placeholder="1200.20" id="montant" required>
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Indemnité pôle emplois :</label>
-                        <input type="number" class="form-control" name="pole_emplois" id="pole_emplois" required>
+                        <input type="text" class="form-control" name="pole_emplois" id="pole_emplois" placeholder="1200.20" required>
                     </div>
                     <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Salair perçu :</label>
+                        <label for="message-text" class="col-form-label">Salaire perçu :</label>
                         <select class="form-select" id="status" name="status" aria-label="Default select example">
                             <option value="1">Oui</option>
                             <option value="2" selected>Non</option>

@@ -32,6 +32,7 @@ $('#register').submit(function() {
             data: {
                 username: $('#username').val(),
                 password: $('#password').val(),
+                email: $('#email').val()
             },
             cache: false,
             success: function(data) {

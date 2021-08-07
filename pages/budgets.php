@@ -6,11 +6,17 @@ if ($_GET['budgets'] != $month['url']) {
     header('Location: /');
 }
 
-$budgets = selectDB('*', 'budgets', 'month = "' . str_replace($_SERVER['REQUEST_URI'], 'budgets/', $_GET['budgets']) . '" AND user_id = "' . $_SESSION['user_id'] . '"', $db, '*');
-$budgets_total = $db->query('SELECT sum(sommes) as sommes FROM `budgets` WHERE `month` = "' . str_replace($_SERVER['REQUEST_URI'], 'budgets/', $_GET['budgets']) . '" AND year = "' . date('Y') . '" AND user_id = "' . $_SESSION['user_id'] . '" AND sommes_due = 1')->fetchColumn();
-$budgets_total_due = $db->query('SELECT sum(montant_due) as montant_due FROM `budgets` WHERE `month` = "' . str_replace($_SERVER['REQUEST_URI'], 'budgets/', $_GET['budgets']) . '" AND year = "' . date('Y') . '" AND user_id = "' . $_SESSION['user_id'] . '"')->fetchColumn();
+$budgets = selectDB('*', 'budgets', 'month = "' . str_replace($_SERVER['REQUEST_URI'], 'budgets/', $_GET['budgets']) . '" AND user_id = "' . $_SESSION['user_id'] . '" AND active = "1"', $db, '*');
+$budgets_total = $db->query('SELECT sum(sommes) as sommes FROM `budgets` WHERE `month` = "' . str_replace($_SERVER['REQUEST_URI'], 'budgets/', $_GET['budgets']) . '" AND year = "' . date('Y') . '" AND user_id = "' . $_SESSION['user_id'] . '" AND sommes_due = "1" AND status = "1" AND active = "1"')->fetchColumn();
+$budgets_total_due = $db->query('SELECT sum(montant_due) as montant_due FROM `budgets` WHERE `month` = "' . str_replace($_SERVER['REQUEST_URI'], 'budgets/', $_GET['budgets']) . '" AND year = "' . date('Y') . '" AND user_id = "' . $_SESSION['user_id'] . '" AND sommes_due = "2" AND status = "1" AND active = "1"')->fetchColumn();
 $salaire = selectDB('*', 'salaires', 'month = "' . str_replace($_SERVER['REQUEST_URI'], 'budgets/', $_GET['budgets']) . '" AND user_id = "' . $_SESSION['user_id'] . '"', $db, '1');
 $salairec = selectDB('*', 'salaires', 'month = "' . str_replace($_SERVER['REQUEST_URI'], 'budgets/', $_GET['budgets']) . '" AND user_id = "' . $_SESSION['user_id'] . '"', $db, '*');
+
+$budgets_total2 = $db->query('SELECT sum(sommes) as sommes FROM `budgets` WHERE `month` = "' . str_replace($_SERVER['REQUEST_URI'], 'budgets/', $_GET['budgets']) . '" AND year = "' . date('Y') . '" AND user_id = "' . $_SESSION['user_id'] . '" AND sommes_due = "1" AND active = "1"')->fetchColumn();
+
+$budgets_total3 = $db->query('SELECT sum(sommes) as sommes FROM `budgets` WHERE `month` = "' . str_replace($_SERVER['REQUEST_URI'], 'budgets/', $_GET['budgets']) . '" AND year = "' . date('Y') . '" AND user_id = "' . $_SESSION['user_id'] . '" AND sommes_due = "1" AND status = "2" AND active = "1"')->fetchColumn();
+
+$total_salaire = 0;
 
 if (!empty($salaire['montant'])) {
 
@@ -45,6 +51,9 @@ if (!empty($salaire['montant'])) {
         <a href="#" class="btn btn-info me-2 mt-2 mb-2 text-white" data-bs-toggle="modal" data-bs-target="#add_budgets"><i class="fas fa-plus text-white me-1"></i> Ajouter une dépense</a>
 
         <a class="popper btn btn-info me-2 mt-2 mb-2 text-white" data-bs-trigger="hover" data-bs-toggle="popover"><i class="fas fa-book"></i> Lexique</a>
+        
+        <a href="" class="btn btn-info me-2 mt-2 mb-2 view_line"><i class="fas fa-eye text-white"></i></a>
+        
         <div class="popper-content d-none">
             <ul class="list-group">
                 <li class="list-group-item"><b>Dépenses :</b> Nom de votre dépense</li>
@@ -61,7 +70,7 @@ if (!empty($salaire['montant'])) {
         <hr />
 
         <div style="position: relative;text-align: left;display: block;" class="col-12 col-md-5 col-lg-5 mt-2 mb-2">
-            <div class="mb-2">Salaire dépensé à <b><?= $percentage; ?> %</b> (Restant : <b><?= intval($total_salaire - $budgets_total) ?> €</b>) :
+            <div class="mb-2">Salaire dépensé à <b><?= $percentage; ?> %</b> (Restant : <b><?= number_format($total_salaire - $budgets_total + $budgets_total_due, 2, ',', '') ?> €</b>)
             </div>
             <div class="progress">
                 <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="<?= $percentage; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $percentage; ?>%"></div>
@@ -72,7 +81,7 @@ if (!empty($salaire['montant'])) {
 
     <hr />
 
-    <div class="table-responsive">
+    <div class="table-responsive mb-2">
 
         <?php if (count($budgets) != 0) { ?>
 
@@ -83,22 +92,54 @@ if (!empty($salaire['montant'])) {
                         <th scope="col">Montant</th>
                         <th scope="col">Status</th>
                         <th scope="col">Montant due</th>
-                        <th scope="col"></th>
+                        <th scope="col">Montant</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="align-middle">
                     <?php foreach ($budgets as $key => $budget) { ?>
-                        <tr>
+                        <tr class="mask_tr_<?= $budget['id'] ?>">
                             <td><?= $budget['name'] ?></td>
-                            <td><?= number_format($budget['sommes'], 0, ",", " "); ?> €</td>
+                            <td><?= $budget['sommes']; ?> €</td>
                             <td><?php if ($budget['status'] != 2) { ?><span class="badge bg-success">Payé</span><?php } else { ?><span class="badge bg-danger">Non payé</span><?php } ?></td>
                             <td><?php if ($budget['sommes_due'] != 2) { ?><span class="badge bg-danger">Aucun montant</span><?php } else { ?><span class="badge bg-success">En +</span><?php } ?></td>
-                            <td><?= number_format($budget['montant_due'], 0, ",", " "); ?> €</td>
-                            <td><a data-bs-toggle="modal" data-bs-target="#edit_budgets_<?= $budget['id'] ?>" href="#" class="btn btn-warning me-2 mt-2 mb-2"><i class="fas fa-pencil-alt"></i></a><a id="delete_budgets_<?= $budget['id'] ?>" href="#" class="btn btn-danger me-2 mt-2 mb-2"><i class="fas fa-trash"></i></a><?php include 'modules/modals/budgetsEdit.php'; ?></td>
+                            <td><?= $budget['montant_due']; ?> €</td>
+                            <td>
+                                <a href="" data-id="<?= $budget['id'] ?>" class="btn btn-info me-2 mt-2 mb-2 mask_line"><i class="fas fa-eye-slash text-white"></i></a>
+                                <a data-bs-toggle="modal" data-bs-target="#edit_budgets_<?= $budget['id'] ?>" href="#" class="btn btn-warning me-2 mt-2 mb-2"><i class="fas fa-pencil-alt"></i></a>
+                                <a id="delete_budgets_<?= $budget['id'] ?>" href="#" class="btn btn-danger me-2 mt-2 mb-2"><i class="fas fa-trash"></i></a>
+                                <?php include 'modules/modals/budgetsEdit.php'; ?>
+                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>
+
+                <tfoot>
+                    <tr>
+                        <th scope="row" class="text-end">Total des dépenses</th>
+                        <td><?= number_format($budgets_total2, 2, ',', ''); ?> €</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-end">Total des factures payer</th>
+                        <td><?= number_format($total_salaire - $budgets_total3 + $budgets_total_due, 2, ',', ''); ?> €</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-end">Total des factures non payer</th>
+                        <td><?= number_format($total_salaire - $budgets_total + $budgets_total_due, 2, ',', ''); ?> €</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
             </table>
 
         <?php } else { ?>
@@ -120,27 +161,27 @@ if (!empty($salaire['montant'])) {
             <?php if (!empty($salaire['montant'])) { ?>
                 <div>
                     <span style="font-size: 13px;font-weight: bold;">Salaire :</span>
-                    <span class="badge bg-secondary ms-1"><?= number_format($salaire['montant'], 0, ",", "."); ?> € net sur le mois</span>
+                    <span class="badge bg-secondary ms-1"><?= $salaire['montant']; ?> € net sur le mois</span>
                 </div>
             <?php } ?>
 
-            <?php if (!empty($salaire['pole_emplois'])) { ?>
+            <?php if (!empty($salaire['pole_emplois']) && $salaire['pole_emplois'] != 0) { ?>
                 <div>
                     <span style="font-size: 13px;font-weight: bold;">Pôle emplois :</span>
-                    <span class="badge bg-secondary ms-1"><?= number_format($salaire['pole_emplois'], 0, ",", "."); ?> € net sur le mois</span>
+                    <span class="badge bg-secondary ms-1"><?= $salaire['pole_emplois']; ?> € net sur le mois</span>
                 </div>
             <?php } ?>
 
-            <?php if (!empty($salaire['pole_emplois'])) { ?>
+            <?php if (!empty($budgets_total_due)) { ?>
                 <div>
                     <span style="font-size: 13px;font-weight: bold;">Montant due :</span>
-                    <span class="badge bg-success ms-1"><?= number_format($budgets_total_due, 0, ",", "."); ?> € sur le mois</span>
+                    <span class="badge bg-success ms-1"><?= $budgets_total_due; ?> € sur le mois</span>
                 </div>
             <?php } ?>
 
             <div>
                 <span style="font-size: 13px;font-weight: bold;">Total :</span>
-                <span class="badge bg-danger ms-1"><?php $total_salaire + $budgets_total_due; ?><?= number_format($total_salaire - $budgets_total, 0, ",", "."); ?> € en <?= $_GET['budgets'] ?> <?= date('Y') ?></span>
+                <span class="badge bg-danger ms-1"><?php $total_salaire; ?><?= number_format($total_salaire - $budgets_total + $budgets_total_due, 2, ',', '') ?> € en <?= $_GET['budgets'] ?> <?= date('Y') ?></span>
             </div>
             <input type="hidden" name="month" value="<?= $_GET['budgets'] ?>">
             <input type="hidden" name="year" value="<?= date('Y') ?>">

@@ -22,11 +22,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Somme :</label>
-                        <input type="number" class="form-control" name="sommes_<?= $budget['id'] ?>" id="sommes_<?= $budget['id'] ?>" value="<?= $budget['sommes'] ?>" required>
+                        <input type="text" class="form-control" name="sommes_<?= $budget['id'] ?>" placeholder="200.20" id="sommes_<?= $budget['id'] ?>" value="<?= $budget['sommes'] ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Montant due :</label>
-                        <input type="number" class="form-control" name="montant_due_<?= $budget['id'] ?>" id="montant_due_<?= $budget['id'] ?>" value="<?= $budget['montant_due'] ?>" required>
+                        <input type="text" class="form-control" name="montant_due_<?= $budget['id'] ?>" placeholder="200.20" id="montant_due_<?= $budget['id'] ?>" value="<?= $budget['montant_due'] ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Facture payer :</label>

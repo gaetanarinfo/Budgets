@@ -19,11 +19,11 @@
 
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Montant (Net) :</label>
-                        <input type="number" class="form-control" name="montant" id="montant_edit" value="<?= $salairess['montant'] ?>" required>
+                        <input type="text" class="form-control" name="montant" id="montant_edit" placeholder="200.20" value="<?= $salairess['montant'] ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Pole emplois (Net) :</label>
-                        <input type="number" class="form-control" name="pole_emplois" id="pole_emplois_edit" value="<?= $salairess['pole_emplois'] ?>" required>
+                        <input type="text" class="form-control" name="pole_emplois" id="pole_emplois_edit" placeholder="200.20" value="<?= $salairess['pole_emplois'] ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Salaire perçu :</label>

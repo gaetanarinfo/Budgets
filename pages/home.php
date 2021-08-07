@@ -1,5 +1,3 @@
-<?php $months = selectDB('*', 'month', '1 ORDER BY id ASC', $db, '*'); ?>
-
 <?php $slider = selectDB('*', 'sliders', 'month = "' . date('m') . '" ORDER BY id ASC', $db, '1'); ?>
 
 <div style="background:url(<?= $static_img ?>slider/<?= $slider['image'] ?>);background-repeat: no-repeat;background-size: cover;background-attachment: fixed;background-position: center;width: 100%;height: auto;">

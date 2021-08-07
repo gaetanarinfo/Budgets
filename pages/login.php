@@ -29,12 +29,16 @@
 
     <div class="checkbox mb-3">
       <label>
-        <input type="checkbox" value="remember-me"> Se souvenir de moi
+        <input type="checkbox" id="remember_me" value="remember-me"> Se souvenir de moi
       </label>
+    </div>
+
+    <div class="mb-3 mt-3">
+      <a href="forgot" style="text-decoration: none;">Mot de passe oublié ?</a>
     </div>
 
     <button class="w-100 btn btn-lg btn-primary" type="submit">Se connecter</button>
 
-    <p class="mt-5 mb-3 text-muted">Seigneur Gaëtan - Budjets © 2021-2022</p>
+    <p class="mt-5 mb-3 text-muted"> © Copyright - Seigneur Gaëtan - Budgets - <?= date('Y') ?></p>
   </form>
 </main>
